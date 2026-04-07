@@ -1,0 +1,29 @@
+CREATE TABLE employee9(
+eid NUMBER PRIMARY KEY,
+ename VARCHAR2(30),
+salary NUMBER);
+
+INSERT INTO employee9 VALUES(1,'Anu',30000);
+INSERT INTO employee9 VALUES(2,'Rahul',40000);
+INSERT INTO employee9 VALUES(3,'Neha',50000);
+
+COMMIT;
+
+CREATE TABLE emp_audit(eid NUMBER, old_salary NUMBER, new_salary NUMBER, change_date DATE);
+
+CREATE OR REPLACE TRIGGER salary_audit_trigger BEFORE UPDATE ON employee9 FOR EACH ROW
+
+BEGIN
+
+IF :NEW.salary<20000 THEN RAISE_APPLICATION_ERROR(-20001,'Salary cannot be less than 20000');
+END IF;
+
+INSERT INTO emp_audit VALUES(:OLD.eid, :OLD.salary, :NEW.salary, SYSDATE);
+
+END;
+/
+
+
+UPDATE employee9 SET salary = 45000 WHERE eid=1;
+
+SELECT * FROM emp_audit;

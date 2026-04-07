@@ -1,0 +1,50 @@
+CREATE TABLE studnt_marks(sid NUMBER PRIMARY KEY, sname VARCHAR(30), MARK1 NUMBER, mark2 NUMBER, mark3 NUMBER);
+
+INSERT INTO studnt_marks VALUES(1,'Anu',80,75,85);
+INSERT INTO studnt_marks VALUES(2,'Rahul',60,55,65);
+INSERT INTO studnt_marks VALUES(3,'Akhil',45,50,40);
+
+COMMIT;
+
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+total NUMBER;
+avg_marks NUMBER;
+grade CHAR;
+
+CURSOR c1 IS
+SELECT sid,sname,mark1,mark2,mark3 FROM studnt_marks;
+
+BEGIN
+
+FOR rec IN c1 LOOP
+
+total := rec.mark1 + rec.mark2 + rec.mark3;
+avg_marks:=total/3;
+
+IF avg_marks >= 80 THEN
+grade := 'A';
+
+ELSIF avg_marks >= 60 THEN
+grade := 'B';
+
+ELSIF avg_marks >= 50 THEN
+grade := 'C';
+
+ELSE
+grade := 'F';
+
+END IF;
+
+DBMS_OUTPUT.PUT_LINE('Student: '||rec.sname||
+' Average:'||avg_marks ||
+' Grade:'||grade);
+
+END LOOP;
+
+END;
+/
+
+

@@ -1,0 +1,29 @@
+CREATE TABLE employee(
+eid NUMBER PRIMARY KEY,
+ename VARCHAR2(30),
+salary NUMBER
+);
+
+INSERT INTO employee VALUES(1,'Anu',30000);
+INSERT INTO employee VALUES(2,'Rahul',40000);
+INSERT INTO employee VALUES(3,'Neha',50000);
+
+COMMIT;
+
+CREATE OR REPLACE FUNCTION annual_salary(month_salary NUMBER)
+RETURN NUMBER
+IS
+annual NUMBER;
+
+BEGIN
+
+annual := month_salary * 12;
+
+RETURN annual;
+
+END;
+/
+
+
+SELECT ename,salary,annual_salary(salary) AS annual_salary FROM employee;
+

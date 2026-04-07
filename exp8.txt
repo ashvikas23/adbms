@@ -1,0 +1,34 @@
+CREATE TABLE employ(
+eid NUMBER PRIMARY KEY,
+ename VARCHAR2(30),
+salary NUMBER
+);
+
+INSERT INTO employ VALUES(1,'Anu',30000);
+INSERT INTO employ VALUES(2,'Rahul',45000);
+INSERT INTO employ VALUES(3,'Neha',50000);
+INSERT INTO employ VALUES(4,'Akhil',35000);
+
+COMMIT;
+
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+
+CURSOR c1 IS
+SELECT ename,salary
+FROM employ
+WHERE salary > (SELECT AVG(salary) FROM employ);
+
+BEGIN
+
+FOR rec IN c1 LOOP
+
+DBMS_OUTPUT.PUT_LINE(
+'Employee Name:' || rec.ename || 'Salary:' || rec.salary);
+
+END LOOP;
+
+END;
+/
