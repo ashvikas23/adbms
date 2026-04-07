@@ -1,0 +1,19 @@
+CREATE OR REPLACE PROCEDURE factorial_proc(n NUMBER)
+IS
+fact NUMBER:=1;
+i NUMBER;
+
+BEGIN
+
+FOR i IN 1..n LOOP
+fact := fact * i;
+END LOOP;
+
+DBMS_OUTPUT.PUT_LINE('Factorial =' || fact);
+
+END;
+/
+
+
+SET SERVEROUTPUT ON;
+EXEC factorial_proc(5);
